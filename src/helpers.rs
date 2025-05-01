@@ -1,9 +1,9 @@
-use crate::{consts::*, prelude::*, Error};
+use crate::{ consts::*, prelude::*, Error };
 use chrono::prelude::Utc;
 use lazy_static::lazy_static;
 use log::info;
-use rand::{thread_rng, Rng};
-use std::sync::atomic::{AtomicU64, Ordering};
+use rand::{ thread_rng, Rng };
+use std::sync::atomic::{ AtomicU64, Ordering };
 use uuid::Uuid;
 
 fn now_timestamp_ms() -> u64 {
@@ -60,20 +60,16 @@ pub(crate) fn generate_random_key() -> Result<[u8; 32]> {
 }
 
 pub fn truncate_float(float: f64, decimals: u32, round_up: bool) -> f64 {
-    let pow10 = 10i64.pow(decimals) as f64;
+    let pow10 = (10i64).pow(decimals) as f64;
     let mut float = (float * pow10) as u64;
     if round_up {
         float += 1;
     }
-    float as f64 / pow10
+    (float as f64) / pow10
 }
 
 pub fn bps_diff(x: f64, y: f64) -> u16 {
-    if x.abs() < EPSILON {
-        INF_BPS
-    } else {
-        (((y - x).abs() / (x)) * 10_000.0) as u16
-    }
+    if x.abs() < EPSILON { INF_BPS } else { (((y - x).abs() / x) * 10_000.0) as u16 }
 }
 
 #[derive(Copy, Clone)]
@@ -103,42 +99,18 @@ mod tests {
 
     #[test]
     fn float_to_string_for_hashing_test() {
-        assert_eq!(float_to_string_for_hashing(0.), "0".to_string());
-        assert_eq!(float_to_string_for_hashing(-0.), "0".to_string());
-        assert_eq!(float_to_string_for_hashing(-0.0000), "0".to_string());
-        assert_eq!(
-            float_to_string_for_hashing(0.00076000),
-            "0.00076".to_string()
-        );
-        assert_eq!(
-            float_to_string_for_hashing(0.00000001),
-            "0.00000001".to_string()
-        );
-        assert_eq!(
-            float_to_string_for_hashing(0.12345678),
-            "0.12345678".to_string()
-        );
-        assert_eq!(
-            float_to_string_for_hashing(87654321.12345678),
-            "87654321.12345678".to_string()
-        );
-        assert_eq!(
-            float_to_string_for_hashing(987654321.00000000),
-            "987654321".to_string()
-        );
-        assert_eq!(
-            float_to_string_for_hashing(87654321.1234),
-            "87654321.1234".to_string()
-        );
-        assert_eq!(float_to_string_for_hashing(0.000760), "0.00076".to_string());
+        assert_eq!(float_to_string_for_hashing(0.0), "0".to_string());
+        assert_eq!(float_to_string_for_hashing(-0.0), "0".to_string());
+        assert_eq!(float_to_string_for_hashing(-0.0), "0".to_string());
         assert_eq!(float_to_string_for_hashing(0.00076), "0.00076".to_string());
-        assert_eq!(
-            float_to_string_for_hashing(987654321.0),
-            "987654321".to_string()
-        );
-        assert_eq!(
-            float_to_string_for_hashing(987654321.),
-            "987654321".to_string()
-        );
+        assert_eq!(float_to_string_for_hashing(0.00000001), "0.00000001".to_string());
+        assert_eq!(float_to_string_for_hashing(0.12345678), "0.12345678".to_string());
+        assert_eq!(float_to_string_for_hashing(87654321.12345678), "87654321.12345678".to_string());
+        assert_eq!(float_to_string_for_hashing(987654321.0), "987654321".to_string());
+        assert_eq!(float_to_string_for_hashing(87654321.1234), "87654321.1234".to_string());
+        assert_eq!(float_to_string_for_hashing(0.00076), "0.00076".to_string());
+        assert_eq!(float_to_string_for_hashing(0.00076), "0.00076".to_string());
+        assert_eq!(float_to_string_for_hashing(987654321.0), "987654321".to_string());
+        assert_eq!(float_to_string_for_hashing(987654321.0), "987654321".to_string());
     }
 }

@@ -5,14 +5,21 @@ mod exchange_client;
 mod exchange_responses;
 mod modify;
 mod order;
+mod ws_exchange;
 
 pub use actions::*;
 pub use builder::*;
-pub use cancel::{ClientCancelRequest, ClientCancelRequestCloid};
+pub use cancel::{ ClientCancelRequest, ClientCancelRequestCloid };
 pub use exchange_client::*;
 pub use exchange_responses::*;
-pub use modify::{ClientModifyRequest, ModifyRequest};
+pub use modify::{ ClientModifyRequest, ModifyRequest };
 pub use order::{
-    ClientLimit, ClientOrder, ClientOrderRequest, ClientTrigger, MarketCloseParams,
-    MarketOrderParams, Order,
+    ClientLimit,
+    ClientOrder,
+    ClientOrderRequest,
+    ClientTrigger,
+    MarketCloseParams,
+    MarketOrderParams,
+    Order,
 };
+pub use ws_exchange::*;
