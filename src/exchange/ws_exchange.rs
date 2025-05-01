@@ -41,7 +41,7 @@ use tokio_tungstenite::{
 #[derive(Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
 struct WsActionRequestPayload {
-    #[serde(flatten)]
+    // #[serde(flatten)]
     action: Actions,
     nonce: u64,
     signature: Signature,
