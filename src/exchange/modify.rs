@@ -5,7 +5,7 @@ use serde::{ Deserialize, Serialize };
 use uuid::Uuid;
 
 #[derive(Debug, Clone)]
-pub enum ClientId {
+pub enum ClientModifyId {
     Oid(u64),
     Cloid(Uuid),
 }
@@ -17,17 +17,17 @@ pub enum SerializedClientId {
     Str(String),
 }
 
-impl From<ClientId> for SerializedClientId {
-    fn from(client_id: ClientId) -> Self {
+impl From<ClientModifyId> for SerializedClientId {
+    fn from(client_id: ClientModifyId) -> Self {
         match client_id {
-            ClientId::Oid(oid) => SerializedClientId::U64(oid),
-            ClientId::Cloid(cloid) => SerializedClientId::Str(uuid_to_hex_string(cloid)),
+            ClientModifyId::Oid(oid) => SerializedClientId::U64(oid),
+            ClientModifyId::Cloid(cloid) => SerializedClientId::Str(uuid_to_hex_string(cloid)),
         }
     }
 }
 #[derive(Debug)]
 pub struct ClientModifyRequest {
-    pub oid: ClientId,
+    pub oid: ClientModifyId,
     pub order: ClientOrderRequest,
 }
 
